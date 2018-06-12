@@ -8,11 +8,6 @@
 </head>
 <body>
     <div id="app">
-        <parent>
-            <son>
-                <grandson></grandson>
-            </son>
-        </parent>
     </div>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script>
@@ -23,22 +18,28 @@
             </div>
         </div> -->
         **/
-        let parent = {
-            template:'<div>parent</div>'
-        };
-        let son = {
-            template:'<div>son</div>'
-        };
+        //如果要在一个组件使用另一个组件，1.先保证使用的组件得是真实存在，2.在需要引用这个组件的实例上通过components注册这个组件，3.组件需要在父级的模板中通过标签的形式引入
         let grandson = {
             template:'<div>grandson</div>'
+        };
+        let son = {
+            template:'<div>son <grandson></grandson></div>',
+            components:{
+                grandson
+            }
+        };
+        let parent = {
+            template:'<div>parent <son></son></div>',
+            components:{
+                son
+            }
         };
         let vm = new Vue({
             el:"#app",
             data:{},
+            template:'<parent></parent>',
             components:{
-                parent,
-                son,
-                grandson
+                parent
             }
         })
     </script>
